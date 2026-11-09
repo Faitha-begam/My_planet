@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-const captions = ['Entering the atmosphere…', 'The sky here is water.', 'Lanterns. Thousands, below you.', 'Welcome to Thalune.']
+const captions = ['Wheee! Falling through the clouds…', 'The sky here is made of water!', 'Look! Giant flowers, glowing below you!', 'Welcome to Mirabloom!']
 
 // The fall: black space, streaking stars, cloud, then a sea of lights rising to meet you.
 const Descent = ({ onDone }) => {

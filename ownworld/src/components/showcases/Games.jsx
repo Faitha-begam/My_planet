@@ -4,154 +4,151 @@ import { useLocalStorage } from '../../hooks/useLocalStorage'
 
 const btn = 'rounded-full border px-5 py-2 text-sm font-bold hover:bg-white/10'
 
-// TIDEPULL: two crews, one tide. Pull only as the swell rises.
-const Tidepull = () => {
-  const [pos, setPos] = useState(45)
-  const [sw, setSw] = useState(0)
-  const [state, setState] = useState('idle')
-  const posRef = useRef(45)
+// CLOUD HOP: tap HOP while the bouncing ball is over the glowing patch. Five clouds to cross.
+const CloudHop = () => {
+  const [run, setRun] = useState(false)
+  const [pos, setPos] = useState(0)
+  const [round, setRound] = useState(0)
+  const [made, setMade] = useState(0)
+  const [msg, setMsg] = useState('')
+  const dir = useRef(1)
+  const p = useRef(0)
+  const zone = 34 - round * 5
   useEffect(() => {
-    if (state !== 'play') return
+    if (!run) return
     const id = setInterval(() => {
-      posRef.current = Math.max(0, posRef.current - 0.5)
-      setPos(posRef.current)
-      setSw((Math.sin(Date.now() / 450) + 1) / 2)
-      if (posRef.current <= 0) setState('lost')
-    }, 40)
+      p.current += dir.current * (1.6 + round * 0.5)
+      if (p.current >= 100 || p.current <= 0) dir.current *= -1
+      p.current = Math.min(100, Math.max(0, p.current))
+      setPos(p.current)
+    }, 25)
     return () => clearInterval(id)
-  }, [state])
-  const pull = () => {
-    if (state !== 'play') return
-    const good = sw > 0.72
-    posRef.current = Math.min(100, Math.max(0, posRef.current + (good ? 9 : -7)))
-    setPos(posRef.current)
-    if (posRef.current >= 100) setState('won')
+  }, [run, round])
+  const hop = () => {
+    if (!run) return
+    const hit = Math.abs(p.current - 50) <= zone / 2
+    setMsg(hit ? 'Boing! Nice hop!' : 'Oops, a wobble! Next cloud.')
+    if (hit) setMade((m) => m + 1)
+    if (round === 4) setRun(false); else setRound((r) => r + 1)
   }
-  const start = () => { posRef.current = 45; setPos(45); setState('play') }
+  const start = () => { setRun(true); setRound(0); setMade(0); setMsg(''); p.current = 0 }
+  const over = !run && (round === 4 && msg !== '')
   return (
     <div>
-      <div className="relative h-14 overflow-hidden rounded-full border border-white/20" style={{ background: 'linear-gradient(90deg,#7f1d1d,#0a1238 50%,#134e4a)' }}>
-        <div className="absolute inset-y-0 w-1.5 -translate-x-1/2 bg-white" style={{ left: `${pos}%`, boxShadow: '0 0 20px 6px #7dd3fc' }} />
-        <span className="absolute left-4 top-1/2 -translate-y-1/2 text-xs font-bold text-white/60">THE SEA</span>
-        <span className="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-white/60">YOUR CREW</span>
+      <svg viewBox="0 0 300 70" className="w-full" aria-hidden="true">
+        {[0, 1, 2, 3, 4].map((i) => <ellipse key={i} cx={30 + i * 60} cy="56" rx="22" ry="8" fill={i < made ? '#fbbf24' : '#cfd8ff'} opacity={i < made ? 0.9 : 0.3} />)}
+        <circle cx={30 + Math.min(made, 4) * 60} cy={40} r="9" fill="#ff7a8a" className="fl" />
+      </svg>
+      <div className="relative mt-2 h-8 rounded-full bg-white/10">
+        <div className="absolute inset-y-0 rounded-full bg-emerald-400/50" style={{ left: `${50 - zone / 2}%`, width: `${zone}%` }} />
+        <span className="absolute top-1/2 size-6 -translate-x-1/2 -translate-y-1/2 rounded-full bg-rose-300" style={{ left: `${pos}%`, boxShadow: '0 0 14px #ff7a8a' }} />
       </div>
-      <p className="mt-4 text-xs uppercase tracking-widest text-mist/60">Swell</p>
-      <div className="relative mt-1 h-4 rounded-full bg-white/10">
-        <div className="absolute inset-y-0 right-0 w-[28%] rounded-r-full bg-emerald-400/40" />
-        <span className="absolute top-1/2 size-5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-sky-300" style={{ left: `${sw * 100}%`, boxShadow: '0 0 14px #7dd3fc' }} />
-      </div>
-      <div className="mt-5 flex items-center gap-4">
-        {state === 'play' ? <button type="button" onClick={pull} className={`${btn} border-sky-300 px-10 py-4 text-lg text-sky-200`}>PULL</button> : <button type="button" onClick={start} className={`${btn} border-sky-300 text-sky-200`}>{state === 'idle' ? 'Join the crew' : 'Pull again'}</button>}
-        <p className="font-lore text-xl italic text-mist">{state === 'won' ? 'The tide is yours. Now lend half your light away.' : state === 'lost' ? 'The sea took it. Sit; try again.' : 'Tap PULL while the swell is in the green.'}</p>
-      </div>
-      <div className="mt-5 flex justify-center gap-2" aria-label="Spectators">
-        {Array.from({ length: 14 }, (_, i) => <span key={i} className="h-5 w-3 rounded transition duration-300" style={{ background: i < (pos / 100) * 14 ? '#ffb347' : '#ffffff1a', boxShadow: i < (pos / 100) * 14 ? '0 0 12px #ffb347' : 'none' }} />)}
+      <div className="mt-4 flex flex-wrap items-center gap-4">
+        {run ? <button type="button" onClick={hop} className={`${btn} border-rose-300 px-10 py-4 text-lg text-rose-200`}>HOP!</button> : <button type="button" onClick={start} className={`${btn} border-rose-300 text-rose-200`}>{over ? 'Play again' : 'Start hopping'}</button>}
+        <p className="font-lore text-xl italic text-mist">{over ? `You hopped ${made} of 5 clouds!` : msg || 'Tap HOP when the ball is over the green patch.'}</p>
       </div>
     </div>
   )
 }
 
-// FOGSWEEP: clear fog to find lanterns; numbers count glowing neighbours.
-const SIZE = 6
-const LANTERNS = 6
-const BREATHS = 16
-const makeBoard = () => { const s = new Set(); while (s.size < LANTERNS) s.add(Math.floor(Math.random() * SIZE * SIZE)); return s }
-const near = (i, s) => {
-  const r = Math.floor(i / SIZE), c = i % SIZE
-  let n = 0
-  for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) {
-    const rr = r + dr, cc = c + dc
-    if ((dr || dc) && rr >= 0 && rr < SIZE && cc >= 0 && cc < SIZE && s.has(rr * SIZE + cc)) n++
+// MEMORY PAIRS: flip two cards. Find all six matching friends.
+const faces = ['#f9a8d4', '#86efac', '#fbbf24', '#7dd3fc', '#c4b5fd', '#fb7185']
+const deal = () => [...faces, ...faces].map((c, i) => ({ c, k: i, r: Math.random() })).sort((a, b) => a.r - b.r)
+const Pairs = () => {
+  const [cards, setCards] = useState(deal)
+  const [up, setUp] = useState([])
+  const [done, setDone] = useState([])
+  const [moves, setMoves] = useState(0)
+  const flip = (k) => {
+    if (up.length === 2 || up.includes(k) || done.includes(k)) return
+    const n = [...up, k]
+    setUp(n)
+    if (n.length === 2) {
+      setMoves((m) => m + 1)
+      const [a, b] = n.map((x) => cards.find((c) => c.k === x))
+      if (a.c === b.c) { setDone((d) => [...d, ...n]); setUp([]) } else setTimeout(() => setUp([]), 800)
+    }
   }
-  return n
-}
-
-const Fogsweep = () => {
-  const [board, setBoard] = useState(makeBoard)
-  const [open, setOpen] = useState([])
-  const found = open.filter((i) => board.has(i)).length
-  const won = found === LANTERNS
-  const lost = !won && open.length >= BREATHS
-  const reveal = (i) => { if (!won && !lost && !open.includes(i)) setOpen((o) => [...o, i]) }
   return (
     <div>
-      <div className="mx-auto grid w-full max-w-sm grid-cols-6 gap-1.5">
-        {Array.from({ length: SIZE * SIZE }, (_, i) => {
-          const isOpen = open.includes(i) || ((won || lost) && board.has(i))
+      <div className="mx-auto grid max-w-sm grid-cols-4 gap-2">
+        {cards.map((c) => {
+          const open = up.includes(c.k) || done.includes(c.k)
           return (
-            <button key={i} type="button" onClick={() => reveal(i)} aria-label={isOpen ? 'Cleared' : 'Fog'}
-              className={`aspect-square rounded-lg border text-sm font-extrabold transition ${isOpen ? 'border-white/10 bg-abyss' : 'border-white/20 bg-indigo-300/20 hover:bg-indigo-300/40'}`}>
-              {isOpen && (board.has(i) ? <span className="mx-auto block size-4 rounded-full bg-amber-300" style={{ boxShadow: '0 0 16px #ffb347' }} /> : <span className="text-sky-200">{near(i, board) || ''}</span>)}
+            <button key={c.k} type="button" onClick={() => flip(c.k)} aria-label={open ? 'Friend' : 'Hidden card'} className="aspect-square rounded-xl border border-white/20 transition" style={{ background: open ? '#0a1238' : '#6366f133' }}>
+              {open && <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="14" fill={c.c} /><circle cx="15" cy="18" r="2" fill="#050a24" /><circle cx="25" cy="18" r="2" fill="#050a24" /><path d="M14 25q6 5 12 0" stroke="#050a24" fill="none" strokeWidth="1.500" /></svg>}
             </button>
           )
         })}
       </div>
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-        <p className="font-lore text-xl italic text-mist">{won ? 'Every lantern found. The fog bows.' : lost ? 'The fog closed in. Lanterns revealed.' : `${found} of ${LANTERNS} lanterns · ${BREATHS - open.length} breaths left`}</p>
-        <button type="button" onClick={() => { setBoard(makeBoard()); setOpen([]) }} className={`${btn} border-sky-300 text-sky-200`}>New fog</button>
+      <div className="mt-4 flex items-center justify-between gap-3">
+        <p className="font-lore text-xl italic text-mist">{done.length === 12 ? `You found all six friends in ${moves} tries!` : `${done.length / 2} of 6 friends found · ${moves} tries`}</p>
+        <button type="button" onClick={() => { setCards(deal()); setUp([]); setDone([]); setMoves(0) }} className={`${btn} border-violet-300 text-violet-200`}>Shuffle</button>
       </div>
     </div>
   )
 }
 
-// ECHO RELAY: every teammate adds a note. Repeat the whole relay.
-const COLORS = ['#ff7a8a', '#ffb347', '#3ff2d0', '#a78bfa']
-const EchoRelay = () => {
-  const [best, setBest] = useLocalStorage('thalune:echo', 0)
-  const [seq, setSeq] = useState([])
-  const [mode, setMode] = useState('idle')
-  const [step, setStep] = useState(0)
-  const [lit, setLit] = useState(null)
+// PILLOW STACK: drop the sliding pillow on the pile. Only the part that lands on the pile stays.
+const Stack = () => {
+  const [best, setBest] = useLocalStorage('mirabloom:pillows', 0)
+  const [blocks, setBlocks] = useState([{ x: 35, w: 30 }])
+  const [mx, setMx] = useState(0)
+  const [state, setState] = useState('idle')
+  const dir = useRef(1)
+  const top = blocks[blocks.length - 1]
   useEffect(() => {
-    if (mode !== 'show') return
-    const ids = []
-    seq.forEach((c, k) => {
-      ids.push(setTimeout(() => setLit(c), k * 700 + 500))
-      ids.push(setTimeout(() => setLit(null), k * 700 + 950))
-    })
-    ids.push(setTimeout(() => { setMode('input'); setStep(0) }, seq.length * 700 + 500))
-    return () => ids.forEach(clearTimeout)
-  }, [mode, seq])
-  const rnd = () => Math.floor(Math.random() * 4)
-  const start = () => { setSeq([rnd()]); setMode('show') }
-  const press = (c) => {
-    if (mode !== 'input') return
-    setLit(c); setTimeout(() => setLit(null), 200)
-    if (c !== seq[step]) { setMode('over'); return }
-    if (step + 1 === seq.length) { setBest((b) => Math.max(b, seq.length)); setSeq((s) => [...s, rnd()]); setMode('show') } else setStep(step + 1)
+    if (state !== 'play') return
+    const speed = 1.2 + blocks.length * 0.12
+    const id = setInterval(() => {
+      setMx((m) => {
+        let n = m + dir.current * speed
+        if (n >= 100 - top.w) { n = 100 - top.w; dir.current = -1 }
+        if (n <= 0) { n = 0; dir.current = 1 }
+        return n
+      })
+    }, 25)
+    return () => clearInterval(id)
+  }, [state, blocks.length, top.w])
+  const drop = () => {
+    if (state !== 'play') return
+    const l = Math.max(mx, top.x), r = Math.min(mx + top.w, top.x + top.w)
+    if (r - l <= 1) { setState('over'); setBest((b) => Math.max(b, blocks.length - 1)); return }
+    setBlocks((b) => [...b, { x: l, w: r - l }])
   }
+  const start = () => { setBlocks([{ x: 35, w: 30 }]); setMx(0); dir.current = 1; setState('play') }
+  const shift = Math.max(0, blocks.length - 9) * 9
   return (
     <div className="text-center">
-      <div className="mx-auto grid max-w-xs grid-cols-2 gap-4">
-        {COLORS.map((c, i) => (
-          <button key={c} type="button" onClick={() => press(i)} aria-label={`Lantern ${i + 1}`} className="aspect-square rounded-3xl border-2 transition duration-150"
-            style={{ borderColor: c, background: lit === i ? c : `${c}22`, boxShadow: lit === i ? `0 0 50px ${c}` : 'none' }} />
-        ))}
+      <svg viewBox="0 0 100 100" className="mx-auto h-72 w-56 rounded-2xl border border-white/10 bg-abyss/40" aria-label="Pillow pile">
+        {blocks.map((b, i) => <rect key={i} x={b.x} y={100 - (i + 1) * 9 + shift} width={b.w} height="8" rx="3" fill={['#f9a8d4', '#c4b5fd', '#7dd3fc', '#fbbf24'][i % 4]} />)}
+        {state === 'play' && <rect x={mx} y={100 - (blocks.length + 1) * 9 + shift} width={top.w} height="8" rx="3" fill="#fff" opacity=".8" />}
+      </svg>
+      <div className="mt-3 flex flex-wrap items-center justify-center gap-4">
+        {state === 'play' ? <button type="button" onClick={drop} className={`${btn} border-amber-300 px-10 py-4 text-lg text-amber-200`}>DROP</button> : <button type="button" onClick={start} className={`${btn} border-amber-300 text-amber-200`}>{state === 'idle' ? 'Start stacking' : 'Stack again'}</button>}
+        <p className="font-lore text-xl italic text-mist">{state === 'over' ? `Wobble! Your pile is ${blocks.length - 1} high.` : `Pile: ${blocks.length - 1} · Best: ${best}`}</p>
       </div>
-      <p className="mt-4 font-lore text-xl italic text-mist">
-        {mode === 'idle' ? 'Each teammate adds one note.' : mode === 'show' ? 'Watch the relay…' : mode === 'input' ? `Your turn: repeat all ${seq.length}` : `The relay broke at ${seq.length - 1} teammates.`} · Best {best}
-      </p>
-      {(mode === 'idle' || mode === 'over') && <button type="button" onClick={start} className={`${btn} mt-3 border-violet-300 text-violet-200`}>{mode === 'idle' ? 'Start the relay' : 'Run it again'}</button>}
     </div>
   )
 }
 
 const games = [
-  { id: 'tidepull', n: 'Tidepull', c: '#7dd3fc', Comp: Tidepull, rules: ['wave>Two crews, one tide', 'bell>Pull only as the swell rises', 'lantern>Crowds glow for who they love'] },
-  { id: 'fogsweep', n: 'Fogsweep', c: '#a78bfa', Comp: Fogsweep, rules: ['eye>Clear fog to find lanterns', 'gear>Numbers count glowing neighbours', 'moon>Sixteen breaths of fog'] },
-  { id: 'echo', n: 'Echo Relay', c: '#ff7a8a', Comp: EchoRelay, rules: ['hand>Each teammate adds one note', 'bell>Repeat the whole relay', 'heart>One slip ends the relay'] },
+  { id: 'hop', n: 'Cloud Hop', c: '#ff7a8a', Comp: CloudHop, rules: ['ball>Watch the bouncing ball', 'hand>Tap HOP over the green patch', 'star>Cross five clouds'] },
+  { id: 'pairs', n: 'Memory Pairs', c: '#a78bfa', Comp: Pairs, rules: ['eye>Flip two cards', 'heart>Find the matching friends', 'star>Find all six'] },
+  { id: 'stack', n: 'Pillow Stack', c: '#fbbf24', Comp: Stack, rules: ['cloud>A pillow slides side to side', 'hand>Tap DROP to land it', 'star>Build the tallest pile'] },
 ]
 
-export const TideGames = () => {
+export const PlayGames = () => {
   const [i, setI] = useState(0)
   const g = games[i]
   return (
     <div className="rounded-2xl border p-6" style={{ borderColor: `${g.c}55`, background: `${g.c}0d` }}>
-      <div className="flex flex-wrap gap-2">
+      <p className="font-lore text-xl italic text-mist">Pick a game. Everyone on Mirabloom plays all three!</p>
+      <div className="mt-3 flex flex-wrap gap-2">
         {games.map((x, k) => <button key={x.id} type="button" onClick={() => setI(k)} aria-pressed={k === i} className={`rounded-full border px-5 py-2 text-sm font-bold ${k === i ? 'bg-white/15' : 'text-mist/70 hover:text-white'}`} style={{ borderColor: x.c }}>{x.n}</button>)}
       </div>
       <div className="mt-4 flex flex-wrap gap-4">
-        {g.rules.map((r) => { const [ic, t] = r.split('>'); return <span key={r} className="flex items-center gap-2 font-lore text-base italic text-mist" style={{ color: g.c }}><Icon name={ic} className="size-5" /><span className="text-mist">{t}</span></span> })}
+        {g.rules.map((r) => { const [ic, t] = r.split('>'); return <span key={r} className="flex items-center gap-2 font-lore text-base italic text-mist"><span style={{ color: g.c }}><Icon name={ic} className="size-5" /></span>{t}</span> })}
       </div>
       <div key={g.id} className="mt-6"><g.Comp /></div>
     </div>

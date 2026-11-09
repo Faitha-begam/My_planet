@@ -10,7 +10,7 @@ const types = ['All', ...new Set(locations.map((l) => l.type))]
 const Explore = () => {
   const [sel, setSel] = useState(null)
   const [type, setType] = useState('All')
-  const [stamps] = useLocalStorage('thalune:stamps', [])
+  const [stamps] = useLocalStorage('mirabloom:stamps', [])
   const card = useRef(null)
   const cur = locations.find((l) => l.id === sel)
   useEffect(() => { if (sel) card.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }) }, [sel])
@@ -18,8 +18,8 @@ const Explore = () => {
 
   return (
     <>
-    <PageHeader crumbs={[['Thalune', '/'], ['Chapter 2 · The World']]} eyebrow="Chapter 2 · The World" title="The map of Thalune"
-      plain="Thalune is an ocean of fog with ten places floating in it: cities, arenas, forests, resorts and one dark secret. Tap a glowing place, then enter it." does={['Filter by kind of place', 'Enter any destination', 'Collect passport stamps']} />
+    <PageHeader crumbs={[['Mirabloom', '/'], ['Chapter 2 · The World']]} eyebrow="Chapter 2 · The World" title="The map of Mirabloom"
+      plain="Here is the whole planet! Ten special places float in the fog: towns, beaches, gardens and one very sleepy hill. Tap a glowing dot to see what it is, then go inside." does={['Filter by kind of place', 'Enter any destination', 'Collect passport stamps']} />
     <main className="mx-auto max-w-6xl px-4 pb-20 pt-6 sm:px-8">
       <p className="font-lore text-lg italic text-mist">Passport: {stamps.length} of {locations.length} stamps</p>
       <div className="mt-4 flex flex-wrap gap-2">
@@ -31,7 +31,7 @@ const Explore = () => {
       </div>
 
       <div className="relative mt-4 aspect-[3/4] w-full overflow-hidden rounded-3xl border border-white/10 bg-deep/40 sm:aspect-[16/9]">
-        {['THE VIOLET REACHES', 'THE WESTERN DRIFT', 'THE TEAL DEEP', 'THE AMBER STRANDS'].map((r, i) => (
+        {['GIGGLE SHALLOWS', 'COSY CORNER', 'SLEEPY DEEP', 'SUNNY STRANDS'].map((r, i) => (
           <span key={r} className="pointer-events-none absolute text-[clamp(1rem,3vw,2.2rem)] font-extrabold tracking-[0.3em] text-white/[0.04]" style={{ left: `${[62, 4, 52, 62][i]}%`, top: `${[4, 48, 92, 76][i]}%` }}>{r}</span>
         ))}
         {locations.map((l) => (
@@ -64,7 +64,7 @@ const Explore = () => {
             </div>
           </article>
         ) : (
-          <p className="pt-8 text-center font-lore text-xl italic text-mist/60">Tap a glowing place on the sea.</p>
+          <p className="pt-8 text-center font-lore text-xl italic text-mist/60">Tap a glowing place on the map.</p>
         )}
       </div>
     </main>

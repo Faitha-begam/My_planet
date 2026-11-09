@@ -3,27 +3,27 @@ import { useLocalStorage } from '../../hooks/useLocalStorage'
 import Scene from '../Scene'
 
 // ---------- Politics ----------
-const leaders = [['Ember Oru', 'Tidewalker Current'], ['Ember Sael', 'Lamplit Current'], ['Ember Vey', 'Quiet Current']]
+const leaders = [['Grandma Hattie', 'Big Hat wearer this month'], ['Little Bo', 'Big Hat wearer last month'], ['Uncle Tumble', 'Next in line, maybe!']]
 
 export const VoteBooth = ({ compact }) => {
-  const [mine, setMine] = useLocalStorage('thalune:vote', null)
+  const [mine, setMine] = useLocalStorage('mirabloom:vote', null)
   const y = 412 + (mine === 'yes' ? 1 : 0)
   const n = 388 + (mine === 'no' ? 1 : 0)
   const pct = Math.round((y / (y + n)) * 100)
   return (
     <div className={compact ? '' : 'rounded-2xl border border-white/10 bg-sky-300/5 p-6'}>
-      <p className="font-lore text-xl italic text-sky-100">Should the tide-bell ring one Hour later?</p>
+      <p className="font-lore text-xl italic text-sky-100">Pancakes or waffles at the Big Picnic?</p>
       <div className="mt-3 flex h-4 overflow-hidden rounded-full bg-white/10" role="img" aria-label={`${pct}% yes`}>
         <div className="bg-sky-300 transition-all duration-700" style={{ width: `${pct}%` }} />
         <div className="bg-rose-300 transition-all duration-700" style={{ width: `${100 - pct}%` }} />
       </div>
-      <p className="mt-1 flex justify-between text-xs text-mist/70"><span>Later {y}</span><span>Keep {n}</span></p>
+      <p className="mt-1 flex justify-between text-xs text-mist/70"><span>Pancakes {y}</span><span>Waffles {n}</span></p>
       <div className="mt-3 flex gap-2">
         {mine ? (
-          <button type="button" onClick={() => setMine(null)} className="rounded-full border border-white/30 px-4 py-1.5 text-xs hover:bg-white/10">You voted {mine === 'yes' ? 'Later' : 'Keep'} · change</button>
+          <button type="button" onClick={() => setMine(null)} className="rounded-full border border-white/30 px-4 py-1.5 text-xs hover:bg-white/10">You picked {mine === 'yes' ? 'pancakes' : 'waffles'} · change</button>
         ) : (<>
-          <button type="button" onClick={() => setMine('yes')} className="rounded-full border border-sky-300 px-4 py-1.5 text-xs text-sky-200 hover:bg-sky-300/20">Ring it later</button>
-          <button type="button" onClick={() => setMine('no')} className="rounded-full border border-rose-300 px-4 py-1.5 text-xs text-rose-200 hover:bg-rose-300/20">Keep the hour</button>
+          <button type="button" onClick={() => setMine('yes')} className="rounded-full border border-sky-300 px-4 py-1.5 text-xs text-sky-200 hover:bg-sky-300/20">Pancakes!</button>
+          <button type="button" onClick={() => setMine('no')} className="rounded-full border border-rose-300 px-4 py-1.5 text-xs text-rose-200 hover:bg-rose-300/20">Waffles!</button>
         </>)}
       </div>
       {!compact && (
@@ -41,7 +41,7 @@ export const VoteBooth = ({ compact }) => {
 }
 
 // ---------- Daily life ----------
-const hours = [['Rising', 'Lamps are fed'], ['Tending', 'Guilds at work'], ['Drifting', 'Everyone naps'], ['Feasting', 'Kitchens glow'], ['Telling', 'Stories are shared'], ['Dimming', 'Wicks are lowered'], ['Dreaming', 'The sea sleeps']]
+const hours = [['Wake-Up Hour', 'Yawn, stretch, say good morning'], ['Play Hour', 'Everybody runs outside'], ['Snack Hour', 'Time for something yummy'], ['Make Hour', 'Build, paint and fix things'], ['Friend Hour', 'Visit a friend'], ['Story Hour', 'Grandmas tell stories'], ['Sleep Hour', 'Cosy beds, quiet night']]
 const pt = (a, r) => [100 + r * Math.cos(a), 100 + r * Math.sin(a)]
 const sector = (i) => {
   const a0 = (i / 7) * 6.283 - 1.5708, a1 = ((i + 1) / 7) * 6.283 - 1.5708
@@ -59,7 +59,7 @@ export const Clock = ({ compact }) => {
   const hand = pt((pos / 7) * 6.283 - 1.5708, 78)
   return (
     <div className="grid place-items-center gap-3 text-center">
-      <svg viewBox="0 0 200 200" className={compact ? 'w-40' : 'w-64'} role="img" aria-label="The Seven Hours clock">
+      <svg viewBox="0 0 200 200" className={compact ? 'w-40' : 'w-64'} role="img" aria-label="The Seven Happy Hours clock">
         {hours.map((h, i) => (
           <path key={h[0]} d={sector(i)} onClick={() => setPick(i)} className="cursor-pointer transition hover:opacity-100"
             fill={i === shown ? '#bef264' : i % 2 ? '#16206a' : '#0f1a55'} opacity={i === shown ? 0.85 : 0.9} stroke="#050a24" strokeWidth="2" />
@@ -82,9 +82,9 @@ export const Clock = ({ compact }) => {
 
 // ---------- Transport ----------
 const lines = [
-  { n: 'The Slow Line', d: '40 days', c: '#fdba74', p: 'M20 120C70 40 130 150 190 80S270 40 280 50' },
-  { n: 'Glass Current', d: '6 days', c: '#7dd3fc', p: 'M20 120C80 110 140 120 200 110S260 90 280 50' },
-  { n: 'Lantern Loop', d: '12 days', c: '#f9a8d4', p: 'M20 120C40 30 120 20 150 70S240 130 280 50' },
+  { n: 'The Sleepy Whale', d: '40 days', c: '#fdba74', p: 'M20 120C70 40 130 150 190 80S270 40 280 50' },
+  { n: 'The Speedy Whale', d: '6 days', c: '#7dd3fc', p: 'M20 120C80 110 140 120 200 110S260 90 280 50' },
+  { n: 'The Round-and-Round Whale', d: '12 days', c: '#f9a8d4', p: 'M20 120C40 30 120 20 150 70S240 130 280 50' },
 ]
 
 export const Current = () => {
@@ -102,7 +102,7 @@ export const Current = () => {
           <button key={x.n} type="button" onClick={() => setI(k)} aria-pressed={k === i}
             className={`rounded-full border px-4 py-1.5 text-xs ${k === i ? 'bg-white/15' : 'text-mist/70 hover:text-white'}`} style={{ borderColor: x.c }}>{x.n}</button>
         ))}
-        <span className="ml-auto font-lore text-lg italic" style={{ color: l.c }}>{l.d} end to end</span>
+        <span className="ml-auto font-lore text-lg italic" style={{ color: l.c }}>{l.d} for the whole trip</span>
       </div>
     </div>
   )

@@ -1,5 +1,9 @@
-// The Wickfolk: each carries the tool of their trade and a flame on their head.
+// The Bloomfolk: each carries the tool of their job and a little glow on their head.
 const acc = {
+  hat: () => <path d="M17 17h26l-6-16H23z" fill="#fbbf24" />,
+  ball: () => <circle cx="49" cy="68" r="6" fill="#ff7a8a" />,
+  flower: (c) => <><circle cx="49" cy="62" r="4" fill={c} /><circle cx="49" cy="62" r="1.500" fill="#ffd166" /><path d="M49 66v10" stroke="#86efac" /></>,
+  drum: () => <ellipse cx="48" cy="66" rx="7" ry="5" fill="#fb7185" stroke="#fff" />,
   lamp: (c) => <><rect x="45" y="60" width="9" height="13" rx="3" fill={c} className="tw" /><path d="M49.500 52v8" stroke="#ffe3b0" /></>,
   bell: () => <path d="M43 70q0-12 7-12t7 12zM46 72h8" fill="#ffe3b0" />,
   ladle: () => <><path d="M50 40v34" stroke="#ffe3b0" strokeWidth="2.500" /><circle cx="50" cy="76" r="6" fill="#ffe3b0" /></>,

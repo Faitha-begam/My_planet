@@ -2,7 +2,7 @@ import { Link, useParams } from 'react-router-dom'
 import { Crumbs } from '../components/PageHeader'
 import Scene from '../components/Scene'
 import Showcase from '../components/Showcase'
-import { Choices, HowItWorks } from '../components/showcases/Systems'
+import { Choices, Gallery, HowItWorks } from '../components/showcases/Systems'
 import { deptById, departments } from '../data/world'
 import { realmOf } from '../data/story'
 import NotFound from './NotFound'
@@ -17,7 +17,7 @@ const Department = () => {
   const next = departments[(i + 1) % departments.length]
   return (
     <main className="mx-auto max-w-5xl px-4 pb-24 pt-20 sm:px-8">
-      <div className="mb-4"><Crumbs crumbs={[['Thalune', '/'], ['Realms', '/realms'], [realm.name, `/realms/${realm.id}`], [d.label]]} /></div>
+      <div className="mb-4"><Crumbs crumbs={[['Mirabloom', '/'], ['Realms', '/realms'], [realm.name, `/realms/${realm.id}`], [d.label]]} /></div>
       <section className="relative overflow-hidden rounded-3xl border" style={{ borderColor: `${d.color}55` }}>
         <Scene id={d.scene} color={d.color} className="h-[44vh] w-full" />
         <div className="absolute inset-0 bg-gradient-to-t from-abyss via-abyss/10 to-transparent" />
@@ -32,6 +32,7 @@ const Department = () => {
         </div>
       </section>
       <div className="mt-6"><Showcase d={d} /></div>
+      <Gallery d={d} />
       <HowItWorks d={d} />
       <Choices d={d} />
       <h2 className="mt-12 text-xs uppercase tracking-[0.3em] text-mist/60">Connected to</h2>

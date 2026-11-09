@@ -10,7 +10,7 @@ const RealmNav = ({ id }) => {
       <Link to={`/realms/${next.id}`} className="group relative block overflow-hidden rounded-3xl border" style={{ borderColor: `${next.color}66` }}>
         <Scene id={next.scene} color={next.color} className="h-40 w-full transition duration-700 group-hover:scale-110" />
         <div className="absolute inset-0 flex flex-col justify-center bg-gradient-to-r from-abyss/90 to-transparent p-6">
-          <p className="text-xs uppercase tracking-[0.3em] text-mist/70">Travel on to the next realm</p>
+          <p className="text-xs uppercase tracking-[0.3em] text-mist/70">Hop on to the next realm</p>
           <p className="text-3xl font-extrabold uppercase sm:text-4xl" style={{ color: next.color }}>{next.name} →</p>
         </div>
       </Link>

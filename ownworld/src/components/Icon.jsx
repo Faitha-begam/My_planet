@@ -15,6 +15,12 @@ const paths = {
   fish: <path d="M3 12q6-8 13 0-7 8-13 0zM16 12l5-4v8z" />,
   bowl: <path d="M3 11h18a9 8 0 0 1-18 0z" />,
   boat: <path d="M3 15h18l-3 5H6zM12 4v10l6-3z" />,
+  flower: <><circle cx="12" cy="12" r="3" /><circle cx="12" cy="5" r="3" /><circle cx="19" cy="12" r="3" /><circle cx="12" cy="19" r="3" /><circle cx="5" cy="12" r="3" /></>,
+  cloud: <path d="M6 18a4 4 0 0 1 0-8 6 6 0 0 1 11-1 4.500 4.500 0 0 1 0 9z" />,
+  ball: <circle cx="12" cy="12" r="8" />,
+  hat: <path d="M5 18h14l-3-12H8zM4 18h16" />,
+  cake: <path d="M5 20v-8h14v8zM12 12V7M12 5v1" />,
+  pebble: <ellipse cx="12" cy="13" rx="7" ry="5" />,
   ring: <circle cx="12" cy="12" r="8" />,
 }
 

@@ -1,5 +1,7 @@
 import { Fragment, useEffect, useState } from 'react'
 import Icon from '../Icon'
+import Scene from '../Scene'
+import { sectorById } from '../../data/story'
 
 // "How it works": the department's invented system as a visual chain you can play.
 export const HowItWorks = ({ d }) => {
@@ -14,7 +16,7 @@ export const HowItWorks = ({ d }) => {
   return (
     <section className="mt-12">
       <div className="flex items-center justify-between">
-        <h2 className="text-xs uppercase tracking-[0.3em] text-mist/60">How it works</h2>
+        <h2 className="text-xs uppercase tracking-[0.3em] text-mist/60">How it works, step by step</h2>
         <button type="button" onClick={() => setPlay((p) => !p)} className="rounded-full border border-white/30 px-4 py-1 text-xs hover:bg-white/10">{play ? 'Pause' : 'Play the system'}</button>
       </div>
       <div className="mt-5 flex flex-wrap items-start justify-center gap-x-1 gap-y-4 sm:flex-nowrap">
@@ -49,6 +51,24 @@ export const Choices = ({ d }) => {
         ))}
       </div>
       {pick !== null && <p key={pick} className="mt-4 animate-[rise-in_.5s_ease-out] font-lore text-xl" style={{ color: d.color }}>{c.opts[pick].b}</p>}
+    </section>
+  )
+}
+
+// More pictures: this sector, plus two neighbours it works with.
+export const Gallery = ({ d }) => {
+  const items = [[d.scene, d.color, d.label, d.line], ...d.related.slice(0, 2).map((id) => { const r = sectorById[id]; return [r.scene, r.color, r.label, r.line] })]
+  return (
+    <section className="mt-10">
+      <h2 className="text-xs uppercase tracking-[0.3em] text-mist/60">More pictures</h2>
+      <div className="mt-4 grid gap-3 sm:grid-cols-3">
+        {items.map(([sc, c, t, l], i) => (
+          <figure key={t} className={`overflow-hidden rounded-2xl border ${i === 0 ? 'sm:col-span-2 sm:row-span-2' : ''}`} style={{ borderColor: `${c}55` }}>
+            <Scene id={sc} color={c} className={`w-full ${i === 0 ? 'h-64 sm:h-full sm:min-h-72' : 'h-32'}`} />
+            <figcaption className="bg-deep/70 p-3"><span className="text-xs font-extrabold uppercase tracking-widest" style={{ color: c }}>{i === 0 ? 'Here' : 'Next door'}: {t}</span><span className="block font-lore text-base italic text-mist">{l}</span></figcaption>
+          </figure>
+        ))}
+      </div>
     </section>
   )
 }

@@ -8,11 +8,11 @@ import { realms } from '../data/story'
 // The hub: ten gates, each one a different place in the same civilization.
 const Realms = () => (
   <main>
-    <PageHeader crumbs={[['Thalune', '/'], ['Chapter 3 · The Realms']]} eyebrow="Chapter 3 · The Realms" title="Ten places where life happens"
-      plain="Thalune’s whole way of life is divided into ten Realms. Each one is a place you step into, with its own look, its own people and its own things to do." does={['Pick a gate', 'Each realm is different']} />
+    <PageHeader crumbs={[['Mirabloom', '/'], ['Chapter 3 · The Realms']]} eyebrow="Chapter 3 · The Realms" title="Twelve places to explore"
+      plain="Life on Mirabloom is split into twelve Realms. Each one is a place you can step into, with its own friends and its own things to try." does={['Pick a gate to step through', 'Every realm is different']} />
     <section className="mx-auto grid max-w-6xl gap-6 px-4 py-10 sm:grid-cols-2 sm:px-8 lg:grid-cols-5">
       {realms.map((r, i) => (
-        <Reveal key={r.id} delay={(i % 5) * 80} className={i % 2 ? 'lg:translate-y-10' : ''}>
+        <Reveal key={r.id} delay={(i % 4) * 80} className={i % 2 ? 'lg:translate-y-8' : ''}>
           <Link to={`/realms/${r.id}`} className="group relative block aspect-[3/4] overflow-hidden rounded-t-[999px] rounded-b-2xl border transition duration-500 hover:-translate-y-2" style={{ borderColor: `${r.color}77`, boxShadow: `0 0 40px -20px ${r.color}` }}>
             <Scene id={r.scene} color={r.color} className="absolute inset-0 h-full w-full transition duration-700 group-hover:scale-125" />
             <div className="absolute inset-0 bg-gradient-to-t from-abyss via-abyss/30 to-transparent" />
@@ -27,7 +27,7 @@ const Realms = () => (
     </section>
     <section className="mx-auto max-w-6xl px-4 pb-24 pt-16 text-center sm:px-8">
       <h2 className="text-xs uppercase tracking-[0.3em] text-mist/60">How everything connects</h2>
-      <p className="mx-auto mt-2 max-w-xl font-lore text-xl italic text-mist">All 28 parts of life are linked. Hover a light to see what depends on what.</p>
+      <p className="mx-auto mt-2 max-w-xl font-lore text-xl italic text-mist">Everything on Mirabloom is connected, like friends holding hands. Touch a dot to see who it’s friends with.</p>
       <div className="mt-4"><CivWeb /></div>
     </section>
   </main>
