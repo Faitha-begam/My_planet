@@ -10,7 +10,7 @@ const Destination = () => {
   const { id } = useParams()
   const l = locById[id]
   const y = useScrollY()
-  const [stamps, setStamps] = useLocalStorage('mirabloom:stamps', [])
+  const [stamps, setStamps] = useLocalStorage('thalune:stamps', [])
   if (!l) return <NotFound />
   const stamped = stamps.includes(l.id)
   const dept = deptById[l.dept]
@@ -19,7 +19,7 @@ const Destination = () => {
   return (
     <main>
       <section className="relative h-[70vh] overflow-hidden">
-        <div className="absolute left-4 top-20 z-10 sm:left-10"><Crumbs crumbs={[['Mirabloom', '/'], ['The World', '/world'], [l.name]]} /></div>
+        <div className="absolute left-4 top-20 z-10 sm:left-10"><Crumbs crumbs={[['Thalune', '/'], ['The World', '/world'], [l.name]]} /></div>
         <Scene id={l.scene} color={l.color} className="absolute inset-0 h-[120%] w-full" style={{ transform: `translateY(${y * 0.3}px) scale(1.05)` }} />
         <div className="absolute inset-0 bg-gradient-to-t from-abyss via-abyss/20 to-transparent" />
         {l.sights.map((s, i) => (

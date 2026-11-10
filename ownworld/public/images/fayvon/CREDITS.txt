@@ -1,0 +1,19 @@
+FAYVON image credits
+=====================
+All scene photos below were downloaded into this project from Unsplash and were marked free under the Unsplash License at the time of download (10 November 2026). The files are local so pages do not rely on remote image hosts.
+
+- hero.jpg — Vadim Sadovski: https://unsplash.com/photos/astronaut-standing-on-alien-planet-with-saturn-like-planet-above-2epQKPvIq74
+- education.jpg — Simona D'Auria: https://unsplash.com/photos/a-foggy-lake-surrounded-by-tall-grass-and-trees-dDKjrFzijbM
+- sports.jpg — Wolfgang Hasselmann: https://unsplash.com/photos/a-surreal-vibrant-landscape-with-a-winding-road-LTySxyejurU
+- transport.jpg — Pascal Bernardon: https://unsplash.com/photos/futuristic-white-aircraft-on-an-elevated-platform-under-cloudy-sky-7_nfkFNxZRM
+- entertainment.jpg — the iop: https://unsplash.com/photos/people-walking-through-a-vibrant-purple-light-tunnel-at-night-9IIgHQx7uWg
+- government.jpg — Evgenii Bogdanov: https://unsplash.com/photos/modern-architectural-building-with-curved-lines-oBBhb91-oCI
+- food.jpg — Moment InFocus: https://unsplash.com/photos/pastel-marshmallow-fruit-with-green-leaves-on-a-pink-background-O7W16_FCO1g
+- healthcare.jpg — Eric Stoynov: https://unsplash.com/photos/eerie-forest-scene-with-glowing-light-through-trees-b1A_Zow4zVA
+- culture.jpg — Alvin David: https://unsplash.com/photos/glowing-paper-lanterns-in-night-sky-6BuptmC7wCY
+- technology.jpg — Vinh Nguyen: https://unsplash.com/photos/a-futuristic-sci-fi-scene-with-a-blue-background-4J1tjkox6ho
+- relationships.jpg — Hanna Lazar: https://unsplash.com/photos/silhouettes-of-two-people-against-a-starry-night-sky-f4V4DoEeYmM
+- canopy.jpg — Nick Young: https://unsplash.com/photos/futuristic-glowing-trees-at-night-with-colorful-lanterns-UM7_9tbo6Dw
+- atlas.jpg — Wolfgang Hasselmann: https://unsplash.com/photos/surreal-landscape-with-orange-sky-and-blue-trees-KUhkssHlHWg
+
+License details: https://unsplash.com/license

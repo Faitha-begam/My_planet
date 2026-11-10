@@ -11,8 +11,8 @@ const People = () => {
   const r = realmById[p.realm]
   return (
     <main>
-      <PageHeader crumbs={[['Mirabloom', '/'], ['Chapter 4 · The People']]} eyebrow="Chapter 4 · The People" title="The twelve Bloomfolk"
-        plain="Meet the friendly people of Mirabloom. Each one lives in a different realm and will show you around." does={['Tap a friend to say hello', 'Follow them into their realm']} color="#fda4af" />
+      <PageHeader crumbs={[['Thalune', '/'], ['Chapter 4 · The People']]} eyebrow="Chapter 4 · The People" title="The ten Wickfolk"
+        plain="Meet the people of Thalune. Each one lives in a different realm and will take you there." does={['Tap a person to hear them', 'Follow them into their realm']} color="#fda4af" />
       <section className="mx-auto max-w-6xl px-4 py-8 sm:px-8">
         <div className="relative mx-auto aspect-square w-full max-w-2xl">
           <span className="tw absolute left-1/2 top-1/2 size-24 -translate-x-1/2 -translate-y-1/2 rounded-full" style={{ background: 'radial-gradient(circle,#fff,#ffb347 40%,transparent 70%)', boxShadow: '0 0 90px #ffb347' }} />
@@ -20,7 +20,7 @@ const People = () => {
             const a = (k / people.length) * 6.283 - 1.5708
             return (
               <button key={q.id} type="button" onClick={() => setI(k)} aria-pressed={k === i} aria-label={`${q.name}, ${q.role}`} className="absolute -translate-x-1/2 -translate-y-1/2 text-center transition hover:scale-110"
-                style={{ left: `${50 + 41 * Math.cos(a)}%`, top: `${50 + 41 * Math.sin(a)}%`, opacity: k === i ? 1 : 0.65, filter: k === i ? `drop-shadow(0 0 16px ${q.color})` : 'none' }}>
+                style={{ left: `${50 + 40 * Math.cos(a)}%`, top: `${50 + 40 * Math.sin(a)}%`, opacity: k === i ? 1 : 0.65, filter: k === i ? `drop-shadow(0 0 16px ${q.color})` : 'none' }}>
                 <Character kind={q.kind} color={q.color} className="mx-auto h-20 sm:h-28" />
                 <span className="block text-[0.65rem] font-bold sm:text-xs">{q.name.split(' ')[0]}</span>
               </button>

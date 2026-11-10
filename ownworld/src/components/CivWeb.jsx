@@ -31,7 +31,7 @@ const CivWeb = () => {
           </g>
         )
       })}
-      <text x="200" y="196" textAnchor="middle" fill={cur ? cur.color : '#b9c7ff'} fontSize="11" fontWeight="800" fontFamily="Syne, sans-serif">{cur ? cur.label : 'MIRABLOOM'}</text>
+      <text x="200" y="196" textAnchor="middle" fill={cur ? cur.color : '#b9c7ff'} fontSize="11" fontWeight="800" fontFamily="Syne, sans-serif">{cur ? cur.label : 'THALUNE'}</text>
       <text x="200" y="212" textAnchor="middle" fill="#b9c7ff" fontSize="8" fontStyle="italic" fontFamily="Cormorant Garamond, serif" opacity=".8">{cur ? 'tap again to enter' : 'hover a light'}</text>
     </svg>
   )

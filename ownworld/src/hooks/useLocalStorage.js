@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
-const EVENT = 'mirabloom-ls'
+const EVENT = 'thalune-ls'
 
 // Persists to LocalStorage and keeps every component using the same key in sync.
 export const useLocalStorage = (key, initial) => {

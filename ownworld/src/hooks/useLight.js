@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 const RADIUS = 260
 
-// Your glow: eases toward the pointer, wanders alone when idle, and
+// Your lantern: eases toward the pointer, wanders alone when idle, and
 // writes --lx/--ly on the container plus --glow (0..1) on every [data-glow].
 export const useLight = (ref) => {
   useEffect(() => {

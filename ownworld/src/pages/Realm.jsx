@@ -20,7 +20,7 @@ const Realm = () => {
   const Layout = layouts[r.layout]
   return (
     <main>
-      <PageHeader crumbs={[['Mirabloom', '/'], ['Realms', '/realms'], [r.name]]} eyebrow={`Realm · ${r.short}`} title={r.name} plain={r.tag} does={r.does} color={r.color} guide={peopleById[r.guide]} />
+      <PageHeader crumbs={[['Thalune', '/'], ['Realms', '/realms'], [r.name]]} eyebrow={`Realm · ${r.short}`} title={r.name} plain={r.tag} does={r.does} color={r.color} guide={peopleById[r.guide]} />
       <div className="mx-auto max-w-6xl px-4 py-8 sm:px-8"><Layout realm={r} /></div>
       <SectorStrip realm={r} />
       <RealmNav id={r.id} />

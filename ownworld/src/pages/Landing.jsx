@@ -11,7 +11,7 @@ import { useLocalStorage } from '../hooks/useLocalStorage'
 
 const stars = Array.from({ length: 90 }, (_, i) => [(i * 47) % 100, (i * 29) % 100, 1 + (i % 3)])
 
-const lines = ['A MESSAGE FOR YOU', 'Hello, hello! Is anybody out there?', 'We are the Bloomfolk of MIRABLOOM.', 'Every night our giant flowers glow, so you can find us.', 'Come and visit! We saved you a seat.']
+const lines = ['TRANSMISSION · SOURCE UNKNOWN', 'To whoever is listening above the water:', 'We are the Wickfolk of THALUNE.', 'For nine hundred years we have kept one light burning, in case someone looked down.', 'Come down. Bring your own light.']
 
 // SCENE 1: the signal. You must tune it before it will speak.
 const Signal = ({ onDone }) => {
@@ -36,19 +36,19 @@ const Signal = ({ onDone }) => {
       <div className="relative mx-auto flex min-h-full max-w-2xl flex-col justify-center gap-6 px-6 py-16 text-center">
         {!locked ? (<>
           <p className="text-xs uppercase tracking-[0.4em] text-mist/60">Station Halcyon-9 · Day 4,211</p>
-          <h1 className="font-lore text-4xl italic sm:text-5xl">Something is saying hello…</h1>
+          <h1 className="font-lore text-4xl italic sm:text-5xl">Something is knocking on the silence.</h1>
           <svg viewBox="0 0 300 100" className="w-full" role="img" aria-label="Signal waveform"><polyline points={pts} fill="none" stroke={strength > 70 ? '#3ff2d0' : '#6b7cff'} strokeWidth="1.500" /></svg>
           <label className="block text-xs uppercase tracking-[0.3em] text-mist/70">Tune the dial · signal {Math.round(strength)}%
             <input type="range" min="0" max="100" value={v} onChange={(e) => change(+e.target.value)} className="mt-3 block w-full accent-amber-300" />
           </label>
-          <p className="font-lore text-lg italic text-mist/70">Turn the dial until the fuzzy noise goes away.</p>
+          <p className="font-lore text-lg italic text-mist/70">Turn the dial until the noise clears.</p>
           <button type="button" onClick={onDone} className="mx-auto text-xs uppercase tracking-[0.3em] text-mist/50 hover:text-white">Skip the transmission →</button>
         </>) : (<>
           <svg viewBox="0 0 300 100" className="w-full" aria-hidden="true"><polyline points={pts} fill="none" stroke="#3ff2d0" strokeWidth="2" /></svg>
           {lines.map((l, i) => (
             <p key={l} className={`animate-[rise-in_.9s_ease-out_both] ${i === 0 ? 'text-xs uppercase tracking-[0.4em] text-phos' : 'font-lore text-2xl italic sm:text-3xl'}`} style={{ animationDelay: `${i * 1.3}s` }}>{l}</p>
           ))}
-          {ready && <button type="button" onClick={onDone} className="mx-auto animate-[rise-in_.8s_ease-out_both] rounded-full border border-wick px-8 py-3 text-sm font-extrabold tracking-[0.3em] text-wick hover:bg-wick/10">I’M COMING!</button>}
+          {ready && <button type="button" onClick={onDone} className="mx-auto animate-[rise-in_.8s_ease-out_both] rounded-full border border-wick px-8 py-3 text-sm font-extrabold tracking-[0.3em] text-wick hover:bg-wick/10">ACCEPT THE INVITATION</button>}
         </>)}
       </div>
     </div>
@@ -56,15 +56,15 @@ const Signal = ({ onDone }) => {
 }
 
 const doors = [
-  ['/origins', '1', 'Origins', 'How a sleepy planet woke up and grew flowers', 'abyss', '#818cf8'],
-  ['/world', '2', 'The World', 'A map of the towns, beaches and gardens', 'nature', '#34d399'],
-  ['/realms', '3', 'The Realms', 'Twelve places to see how everyone lives: games, school, food, parties…', 'city', '#ffb347'],
-  ['/people', '4', 'The People', 'Meet the twelve friends who will show you around', 'family', '#fda4af'],
+  ['/origins', '1', 'Origins', 'How the Wickfolk came to this water-sky world', 'abyss', '#818cf8'],
+  ['/world', '2', 'The World', 'A map of its seas, cities and wonders', 'nature', '#34d399'],
+  ['/realms', '3', 'The Realms', 'Ten places where life happens: games, school, cinema, food…', 'city', '#ffb347'],
+  ['/people', '4', 'The People', 'Meet the ten inhabitants who will be your guides', 'family', '#fda4af'],
 ]
 
 // SCENE 3: you have landed. Four doors, in the order of the story.
 const Shore = ({ onReplay }) => {
-  const sael = peopleById.kiki
+  const sael = peopleById.sael
   const loop = [...realms, ...realms]
   return (
     <main className="relative min-h-screen overflow-hidden">
@@ -72,10 +72,10 @@ const Shore = ({ onReplay }) => {
       <div className="relative z-10 flex min-h-screen flex-col justify-end px-4 pb-8 pt-24 sm:px-10">
         <div className="mb-4 flex items-end gap-3">
           <Character kind={sael.kind} color={sael.color} className="h-44 sm:h-64" />
-          <p className="mb-16 max-w-xs rounded-2xl rounded-bl-none border border-white/20 bg-deep/80 p-4 font-lore text-lg italic sm:text-xl">“Hello! I’m so happy you’re here. Where shall we go first?”<span className="mt-1 block text-xs not-italic text-mist/60">{sael.name}, {sael.role}</span></p>
+          <p className="mb-16 max-w-xs rounded-2xl rounded-bl-none border border-white/20 bg-deep/80 p-4 font-lore text-lg italic sm:text-xl">“You came. Few do. This light is yours now. Where shall we begin?”<span className="mt-1 block text-xs not-italic text-mist/60">{sael.name}, {sael.role}</span></p>
         </div>
-        <GlowTitle word="MIRABLOOM" />
-        <p className="mt-1 font-lore text-xl italic text-mist/80 sm:text-2xl">The planet that blooms at night.</p>
+        <GlowTitle word="THALUNE" />
+        <p className="mt-1 font-lore text-xl italic text-mist/80 sm:text-2xl">The water that remembers light.</p>
         <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {doors.map(([to, n, t, line, scene, c]) => (
             <Link key={to} to={to} className="group relative overflow-hidden rounded-t-[3rem] rounded-b-xl border bg-deep/60 transition hover:-translate-y-1" style={{ borderColor: `${c}66` }}>
@@ -101,7 +101,7 @@ const Shore = ({ onReplay }) => {
 }
 
 const Landing = () => {
-  const [arrived, setArrived] = useLocalStorage('mirabloom:arrived', false)
+  const [arrived, setArrived] = useLocalStorage('thalune:arrived', false)
   const [stage, setStage] = useState(arrived ? 'shore' : 'signal')
   const land = () => { setArrived(true); setStage('shore') }
   if (stage === 'signal') return <Signal onDone={() => setStage('descent')} />

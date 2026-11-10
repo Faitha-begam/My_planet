@@ -54,5 +54,3 @@ html, body, #root {
 @keyframes curtl { to { transform: translateX(-102%); } }
 @keyframes curtr { to { transform: translateX(102%); } }
 @keyframes marquee { to { transform: translateX(-50%); } }
-@keyframes bobs { 50% { transform: translateY(-2px); } }
-.pb { animation: bobs 3s ease-in-out infinite; }
